@@ -8,13 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.mstc.mstcapp.util.RetrofitService
 import com.mstc.mstcapp.databinding.FragmentProjectIdeaBinding
 import com.mstc.mstcapp.model.ProjectIdea
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.mstc.mstcapp.util.RetrofitService
 import kotlinx.coroutines.launch
 
 
@@ -59,29 +58,30 @@ class ProjectIdeaFragment : BottomSheetDialogFragment() {
             else if (projectIdeaModel.idea.isEmpty())
                 binding.idea1.error = "Cannot be empty!"
             else if (projectIdeaModel.description.isEmpty())
-                binding.description1.error = "Cannot be empty!" else
-                postData(projectIdeaModel)
+                binding.description1.error = "Cannot be empty!"
+            else
+                lifecycleScope.launch { postData(projectIdeaModel) }
         }
     }
 
-    private fun postData(projectIdeaModel: ProjectIdea) {
+    private suspend fun postData(projectIdeaModel: ProjectIdea) {
         progressDialog.show()
         val service: RetrofitService = RetrofitService.create()
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = service.postIdea(projectIdeaModel)
-            if (response.isSuccessful) {
-                Log.d(TAG, "postData() returned: ${response.body()}")
-                dismiss()
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Idea Posted Successfully")
-                    .setMessage("Your idea has been posted successfully! " +
-                            "Please feel free to check out the resources while we contact you.")
-                    .setPositiveButton("Dismiss") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
-                    .show()
-            } else {
-                Toast.makeText(context, "Could not post idea! Try Again", Toast.LENGTH_SHORT).show()
-                Log.e(TAG, "postData: Failed! ${response.code()}")
-            }
+        val response = service.postIdea(projectIdeaModel)
+        if (response.isSuccessful) {
+            Log.d(TAG, "postData() returned: ${response.body()}")
+            progressDialog.dismiss()
+            dismiss()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Idea Posted Successfully")
+                .setMessage("Your idea has been posted successfully! " +
+                        "Please feel free to check out the resources while we contact you.")
+                .setPositiveButton("Dismiss") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
+                .show()
+        } else {
+            Toast.makeText(context, "Could not post idea! Try Again", Toast.LENGTH_SHORT).show()
+            Log.e(TAG, "postData: Failed! ${response.code()}")
         }
+
     }
 }

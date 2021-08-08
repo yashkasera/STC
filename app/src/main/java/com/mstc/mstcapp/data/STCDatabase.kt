@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.mstc.mstcapp.model.explore.BoardMember
 import com.mstc.mstcapp.model.resource.Detail
 import com.mstc.mstcapp.model.resource.Resource
@@ -32,8 +33,14 @@ abstract class STCDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
-                STCDatabase::class.java, "STCDatabase.db"
-            )
+                STCDatabase::class.java, "STCDatabase.db")
+                .addCallback(object : Callback() {
+                    override fun onOpen(db: SupportSQLiteDatabase) {
+                        super.onOpen(db)
+                        val repository = ResourceRepository(context = context, INSTANCE!!)
+                        repository.getBoardMembers()
+                    }
+                })
                 .build()
     }
 }

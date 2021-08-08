@@ -45,9 +45,10 @@ class ProjectViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         details.post {
             run {
                 details.text = project.description
-                if (details.lineCount < 3) {
+                if (details.lineCount < 3)
                     viewMore.visibility = View.GONE
-                }
+                else
+                    viewMore.visibility = View.VISIBLE
             }
         }
         viewMore.setOnClickListener {
@@ -76,8 +77,8 @@ class ProjectViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         mView.setOnClickListener { openURL(project.link) }
         cardView.setCardBackgroundColor(
             ContextCompat.getColor(mView.context, when {
-                position % 3 == 0 -> R.color.colorTertiaryBlue
-                position % 3 == 1 -> R.color.colorTertiaryRed
+                layoutPosition % 3 == 0 -> R.color.colorTertiaryBlue
+                layoutPosition % 3 == 1 -> R.color.colorTertiaryRed
                 else -> R.color.colorTertiaryYellow
             }))
     }

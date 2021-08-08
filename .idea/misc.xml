@@ -18,16 +18,20 @@
         <entry key="app/src/main/res/drawable/selected_dot.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/drawable/tab_selector.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/drawable/tab_selectoy.xml" value="0.23055555555555557" />
+        <entry key="app/src/main/res/drawable/welcome_default_dot.xml" value="0.22037037037037038" />
+        <entry key="app/src/main/res/drawable/welcome_dot_selector.xml" value="0.22037037037037038" />
+        <entry key="app/src/main/res/drawable/welcome_selected_dot.xml" value="0.22037037037037038" />
         <entry key="app/src/main/res/font-v26/dm_sans.xml" value="0.2760416666666667" />
         <entry key="app/src/main/res/font/dm_sans.xml" value="0.2760416666666667" />
         <entry key="app/src/main/res/layout/about_fragment.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/activity_view_resource.xml" value="0.13451086956521738" />
-        <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.10126570943578807" />
         <entry key="app/src/main/res/layout/details_fragment.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/event_fragment.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/feed_fragment.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_details.xml" value="0.11955420466058764" />
         <entry key="app/src/main/res/layout/fragment_explore.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/fragment_explore2.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/fragment_project_idea.xml" value="0.13451086956521738" />

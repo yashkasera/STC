@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -31,12 +33,19 @@ class RoadmapFragment(domain: String) : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(RoadmapViewModel::class.java)
-        viewModel.getRoadmap(requireContext(), domain)
+        viewModel.getRoadmap(domain)
             .observe(viewLifecycleOwner, { roadmap ->
-                run { setImage(roadmap.image) }
+                if (roadmap != null) {
+                    binding.loading.visibility = GONE
+                    setImage(roadmap.image)
+                } else {
+                    binding.roadmapImage.setImageDrawable(ContextCompat.getDrawable(requireContext(),
+                        R.drawable.ic_error))
+                    binding.loading.visibility = VISIBLE
+                }
             })
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refreshRoadmap(requireContext(), domain)
+            viewModel.refreshRoadmap(domain)
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

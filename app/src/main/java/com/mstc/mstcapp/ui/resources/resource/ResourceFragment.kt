@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
 
-class ResourceFragment(domain: String) : Fragment() {
+class ResourceFragment(val domain: String) : Fragment() {
 
-    var domain = domain
     private lateinit var binding: FragmentSwipeRecyclerBinding
     private lateinit var viewModel: ResourceViewModel
-    private lateinit var resourceAdapter: ResourceAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -26,25 +23,24 @@ class ResourceFragment(domain: String) : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ResourceViewModel::class.java)
-        resourceAdapter = ResourceAdapter()
+        val resourceAdapter = ResourceAdapter()
         binding.recyclerView.adapter = resourceAdapter
-        viewModel.getResources(requireContext(), domain)
+        viewModel.getResources(domain)
             .observe(viewLifecycleOwner, { resources ->
                 run {
-                    if (resources.isEmpty())
-                        binding.retryButton.isVisible = true
-                    else {
-                        binding.retryButton.isVisible = false
+                    if (resources == null || resources.isEmpty()) {
+                        binding.retryButton.visibility = View.VISIBLE
+                    } else {
+                        binding.retryButton.visibility = View.GONE
                         resourceAdapter.list = resources
                     }
                 }
             })
         binding.retryButton.setOnClickListener {
-            viewModel.refreshResources(requireContext(),
-                domain)
+            viewModel.refreshResources(domain)
         }
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refreshResources(requireContext(), domain)
+            viewModel.refreshResources(domain)
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

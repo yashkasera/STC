@@ -6,17 +6,13 @@ import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import androidx.room.withTransaction
 import com.mstc.mstcapp.MainActivity
 import com.mstc.mstcapp.model.explore.BoardMember
-import com.mstc.mstcapp.model.resource.Detail
-import com.mstc.mstcapp.model.resource.Resource
 import com.mstc.mstcapp.model.resource.Roadmap
 import com.mstc.mstcapp.util.Constants
 import com.mstc.mstcapp.util.RetrofitService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.*
 
 private const val TAG = "ResourceRepository"
@@ -29,7 +25,8 @@ class ResourceRepository(
     private var sharedPreferences: SharedPreferences =
         context.getSharedPreferences(Constants.STC_SHARED_PREFERENCES, MODE_PRIVATE)
 
-    fun getBoardMembers(): LiveData<List<BoardMember>> {
+    fun getBoardMembers(): LiveData<List<BoardMember>> = liveData {
+        emitSource(stcDatabase.databaseDao().getBoardMembers())
         val lastChecked: Long = sharedPreferences.getLong("lastChecked", -1)
         var nextCheck = System.currentTimeMillis()
         if (lastChecked != -1L) {
@@ -41,85 +38,76 @@ class ResourceRepository(
         if (lastChecked == -1L || nextCheck <= Date().time)
             if (isNetworkAvailable(context))
                 fetchBoardMembers()
-        return stcDatabase.databaseDao().getBoardMembers()
     }
 
-    private fun fetchBoardMembers() = runBlocking {
-        launch(Dispatchers.Default) {
-            val response = service.getBoard()
-            if (response.isSuccessful) {
-                Log.d(TAG, "getBoardMembers() returned: ${response.body()}")
-                stcDatabase.databaseDao().clearBoardMembers()
-                response.body()?.let { stcDatabase.databaseDao().insertBoardMembers(it) }
-            } else Log.e(TAG, "getBoardMembers: " + response.code())
-        }
+    private suspend fun fetchBoardMembers() {
+        val response = service.getBoard()
+        if (response.isSuccessful) {
+            Log.d(TAG, "getBoardMembers() returned: ${response.body()}")
+            stcDatabase.databaseDao().clearBoardMembers()
+            response.body()?.let { stcDatabase.databaseDao().insertBoardMembers(it) }
+        } else Log.e(TAG, "getBoardMembers: " + response.code())
     }
 
 
-    fun getDomainDetails(domain: String): LiveData<Detail> {
+    fun getDomainDetails(domain: String) = liveData {
         if (isNetworkAvailable(context) && !MainActivity.isFetchedData(domain + "_details")!!) {
             fetchDetails(domain)
         }
-        return stcDatabase.databaseDao().getDetails(domain)
+        emitSource(stcDatabase.databaseDao().getDetails(domain))
     }
 
-    private fun fetchDetails(domain: String) = runBlocking {
-        launch(Dispatchers.Default) {
-            val response = service.getDetails(domain)
-            if (response.isSuccessful) {
-                Log.d(TAG, "getBoardMembers() returned: ${response.body()}")
-                stcDatabase.withTransaction {
-                    stcDatabase.databaseDao().deleteDetails(domain)
-                    response.body()?.let { stcDatabase.databaseDao().insertDetails(it) }
-                    MainActivity.setFetchedData(domain + "_details")
-                }
-            } else Log.e(TAG, "getBoardMembers: " + response.code())
-        }
+    private suspend fun fetchDetails(domain: String) {
+        val response = service.getDetails(domain)
+        if (response.isSuccessful) {
+            Log.d(TAG, "getBoardMembers() returned: ${response.body()}")
+            stcDatabase.withTransaction {
+                stcDatabase.databaseDao().deleteDetails(domain)
+                response.body()?.let { stcDatabase.databaseDao().insertDetails(it) }
+                MainActivity.setFetchedData(domain + "_details")
+            }
+        } else Log.e(TAG, "getBoardMembers: " + response.code())
+
     }
 
-    fun getDomainRoadmap(domain: String): LiveData<Roadmap> {
+    fun getDomainRoadmap(domain: String) = liveData<Roadmap> {
+        emitSource(stcDatabase.databaseDao().getRoadmap(domain))
         if (isNetworkAvailable(context) && !MainActivity.isFetchedData(domain + "_roadmap")!!) {
             fetchRoadmap(domain)
         }
-        return stcDatabase.databaseDao().getRoadmap(domain)
     }
 
-    private fun fetchRoadmap(domain: String) = runBlocking {
-        launch(Dispatchers.Default) {
-            val response = service.getRoadmap(domain)
-            if (response.isSuccessful) {
-                Log.d(TAG, "getBoardMembers() returned: ${response.body()}")
-                stcDatabase.withTransaction {
-                    stcDatabase.databaseDao().deleteRoadmap(domain)
-                    response.body()?.let { stcDatabase.databaseDao().insertRoadmap(it) }
-                    MainActivity.setFetchedData(domain + "_roadmap")
-                }
-            } else Log.e(TAG, "getBoardMembers: " + response.code())
-        }
+    private suspend fun fetchRoadmap(domain: String) {
+        val response = service.getRoadmap(domain)
+        if (response.isSuccessful) {
+            Log.d(TAG, "fetchRoadmap() returned: ${response.body()}")
+            stcDatabase.withTransaction {
+                stcDatabase.databaseDao().deleteRoadmap(domain)
+                response.body()?.let { stcDatabase.databaseDao().insertRoadmap(it) }
+                MainActivity.setFetchedData(domain + "_roadmap")
+            }
+        } else Log.e(TAG, "fetchRoadmap: " + response.code())
     }
 
-    fun getDomainResources(domain: String): LiveData<List<Resource>> {
+    fun getDomainResources(domain: String) = liveData {
+        emitSource(stcDatabase.databaseDao().getResources(domain))
         if (isNetworkAvailable(context) && !MainActivity.isFetchedData(domain + "_resources")!!) {
             fetchResources(domain)
         }
-        return stcDatabase.databaseDao().getResources(domain)
     }
 
-    private fun fetchResources(domain: String) = runBlocking {
-
-        launch(Dispatchers.Default) {
-            val response = service.getResources(domain)
-            if (response.isSuccessful) {
-                Log.d(TAG, "getBoardMembers() returned: ${response.body()}")
-                stcDatabase.withTransaction {
-                    response.body()?.let {
-                        stcDatabase.databaseDao().deleteResources(domain)
-                        stcDatabase.databaseDao().insertResources(it)
-                        MainActivity.setFetchedData(domain + "_resources")
-                    }
+    private suspend fun fetchResources(domain: String) {
+        val response = service.getResources(domain)
+        if (response.isSuccessful) {
+            Log.d(TAG, "getBoardMembers() returned: ${response.body()}")
+            stcDatabase.withTransaction {
+                response.body()?.let {
+                    stcDatabase.databaseDao().deleteResources(domain)
+                    stcDatabase.databaseDao().insertResources(it)
+                    MainActivity.setFetchedData(domain + "_resources")
                 }
-            } else Log.e(TAG, "getBoardMembers: " + response.code())
-        }
+            }
+        } else Log.e(TAG, "getBoardMembers: " + response.code())
     }
 
     private fun isNetworkAvailable(context: Context): Boolean {
@@ -128,19 +116,19 @@ class ResourceRepository(
         return networkInfo != null && networkInfo.isConnected
     }
 
-    fun refreshDetails(domain: String) {
+    suspend fun refreshDetails(domain: String) {
         fetchDetails(domain)
     }
 
-    fun refreshRoadmap(domain: String) {
+    suspend fun refreshRoadmap(domain: String) {
         fetchRoadmap(domain)
     }
 
-    fun refreshResources(domain: String) {
+    suspend fun refreshResources(domain: String) {
         fetchResources(domain)
     }
 
-    fun refreshBoard() {
+    suspend fun refreshBoard() {
         fetchBoardMembers()
     }
 }

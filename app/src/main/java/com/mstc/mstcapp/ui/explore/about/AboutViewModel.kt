@@ -1,22 +1,25 @@
 package com.mstc.mstcapp.ui.explore.about
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mstc.mstcapp.data.ResourceRepository
 import com.mstc.mstcapp.data.STCDatabase
 import com.mstc.mstcapp.model.explore.BoardMember
+import kotlinx.coroutines.launch
 
-class AboutViewModel : ViewModel() {
-    fun getBoard(context: Context): LiveData<List<BoardMember>> {
-        val repository =
-            ResourceRepository(context, STCDatabase.getInstance(context))
+class AboutViewModel(application: Application) : AndroidViewModel(application) {
+    val context: Context by lazy { application.applicationContext }
+    val repository =
+        ResourceRepository(context, STCDatabase.getInstance(context))
+
+    fun getBoard(): LiveData<List<BoardMember>> {
         return repository.getBoardMembers()
     }
 
-    fun refreshBoard(context: Context) {
-        val repository =
-            ResourceRepository(context, STCDatabase.getInstance(context))
-        repository.refreshBoard()
+    fun refreshBoard() {
+        viewModelScope.launch { repository.refreshBoard() }
     }
 }

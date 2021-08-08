@@ -1,24 +1,28 @@
 package com.mstc.mstcapp.ui.resources.details
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mstc.mstcapp.data.ResourceRepository
 import com.mstc.mstcapp.data.STCDatabase
 import com.mstc.mstcapp.model.resource.Detail
+import kotlinx.coroutines.launch
 
-class DetailsViewModel() : ViewModel() {
+class DetailsViewModel(application: Application) : AndroidViewModel(application) {
+    val context: Context by lazy { application.applicationContext }
+    val repository =
+        ResourceRepository(context, STCDatabase.getInstance(context))
 
-    fun getDetails(context: Context, domain: String): LiveData<Detail> {
-        val repository =
-            ResourceRepository(context, STCDatabase.getInstance(context))
+    fun getDetails(domain: String): LiveData<Detail> {
         return repository.getDomainDetails(domain)
     }
 
-    fun refreshDetails(context: Context, domain: String) {
-        val repository =
-            ResourceRepository(context, STCDatabase.getInstance(context))
-        repository.refreshDetails(domain)
+    fun refreshDetails(domain: String) {
+        viewModelScope.launch {
+            repository.refreshDetails(domain)
+        }
     }
 
 }

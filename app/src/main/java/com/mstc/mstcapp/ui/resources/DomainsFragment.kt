@@ -36,8 +36,8 @@ class DomainsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
         list = ArrayList<Domain>()
         val style1: Int = R.style.resources_red

@@ -1,7 +1,6 @@
 package com.mstc.mstcapp.ui.resources.details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,7 @@ import com.mstc.mstcapp.databinding.FragmentDetailsBinding
 
 private const val TAG = "DetailsFragment"
 
-class DetailsFragment(domain: String) : Fragment() {
-    var domain = domain
+class DetailsFragment(val domain: String) : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var viewModel: DetailsViewModel
@@ -20,7 +18,7 @@ class DetailsFragment(domain: String) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -28,17 +26,21 @@ class DetailsFragment(domain: String) : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
-        viewModel.getDetails(requireContext(), domain).observe(viewLifecycleOwner, { detail ->
+        viewModel.getDetails(domain).observe(viewLifecycleOwner, { detail ->
             run {
-                Log.d(TAG, "onActivityCreated() returned: ${detail.description}")
                 binding.apply {
-                    details.text = detail.description
-                    salary.text = detail.expectation
+                    if (detail != null) {
+                        retryButton.visibility = View.GONE
+                        details.text = detail.description
+                        salary.text = detail.expectation
+                    } else {
+                        retryButton.visibility = View.VISIBLE
+                    }
                 }
             }
         })
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refreshDetails(requireContext(), domain)
+            viewModel.refreshDetails(domain)
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val fetchedData = HashMap<String, Boolean>()
-
+        public var feedPosition = 0
         fun isFetchedData(domain: String): Boolean? {
             return if (fetchedData.containsKey(domain))
                 fetchedData[domain]

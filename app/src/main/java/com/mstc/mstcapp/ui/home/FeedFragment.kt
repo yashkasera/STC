@@ -1,7 +1,6 @@
 package com.mstc.mstcapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.PagingData
-import androidx.paging.map
 import androidx.recyclerview.widget.RecyclerView
+import com.mstc.mstcapp.MainActivity
 import com.mstc.mstcapp.ui.loadState.LoadStateAdapter
-import com.mstc.mstcapp.util.RetrofitService
-import com.mstc.mstcapp.data.feed.FeedRepository
 import com.mstc.mstcapp.databinding.FragmentRecyclerViewBinding
-import com.mstc.mstcapp.data.feed.FeedDatabase
 import com.mstc.mstcapp.injection.FeedInjection
-import com.mstc.mstcapp.model.Feed
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import androidx.recyclerview.widget.LinearLayoutManager
+
 
 private const val TAG = "FeedFragment"
 
@@ -32,7 +28,6 @@ class FeedFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentRecyclerViewBinding
-//    private lateinit var viewModel: FeedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,17 +46,6 @@ class FeedFragment : Fragment() {
                 owner = this
             )
         ).get(FeedViewModel::class.java)
-
-        val feedRepository =
-            FeedRepository(RetrofitService.create(), FeedDatabase.getInstance(requireContext()))
-        feedRepository.getFeeds().map { value: PagingData<Feed> ->
-            value.map { feed ->
-                {
-                    Log.d(TAG, "onActivityCreated() returned: ${feed.id} => ${feed.title}")
-                }
-            }
-        }
-
 
 //        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
 //        binding.recyclerView.addItemDecoration(decoration)
@@ -85,7 +69,7 @@ class FeedFragment : Fragment() {
             footer = LoadStateAdapter { feedAdapter.retry() }
         )
 
-        bindRecylerView(
+        bindRecyclerView(
             header = header,
             feedAdapter = feedAdapter,
             uiState = uiState,
@@ -94,7 +78,7 @@ class FeedFragment : Fragment() {
     }
 
 
-    private fun FragmentRecyclerViewBinding.bindRecylerView(
+    private fun FragmentRecyclerViewBinding.bindRecyclerView(
         header: LoadStateAdapter,
         feedAdapter: FeedAdapter,
         uiState: StateFlow<UiState>,
@@ -178,5 +162,15 @@ class FeedFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        val lastFirstVisiblePosition =
+            (binding.recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+        MainActivity.feedPosition = lastFirstVisiblePosition
+    }
 
+    override fun onResume() {
+        super.onResume()
+        (binding.recyclerView.layoutManager as LinearLayoutManager).scrollToPosition(MainActivity.feedPosition)
+    }
 }
