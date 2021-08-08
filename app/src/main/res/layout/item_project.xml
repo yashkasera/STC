@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_medium"
+    android:layout_marginVertical="@dimen/margin_small"
+    android:animateLayoutChanges="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/margin_small"
+        android:paddingStart="@dimen/margin_small">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginHorizontal="@dimen/margin_small"
+            android:layout_marginVertical="@dimen/margin_small"
+            android:layout_marginStart="136dp"
+            android:layout_toStartOf="@id/viewMore"
+            android:textAppearance="@style/heading1" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_error" />
+
+        <TextView
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/viewMore"
+            android:ellipsize="end" />
+
+
+        <ImageButton
+            android:id="@+id/viewMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_medium"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/view"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/drawable/default_dot.xml" value="0.23055555555555557" />
+        <entry key="app/src/main/res/drawable/ic_app_dev.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/drawable/ic_cc.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/drawable/ic_facebook.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/drawable/ic_github.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/drawable/ic_instagram.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/drawable/ic_invitation.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/drawable/ic_linkedin.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/drawable/resource_background.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/drawable/selected_dot.xml" value="0.23055555555555557" />
+        <entry key="app/src/main/res/drawable/tab_selector.xml" value="0.23055555555555557" />
+        <entry key="app/src/main/res/drawable/tab_selectoy.xml" value="0.23055555555555557" />
+        <entry key="app/src/main/res/font-v26/dm_sans.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/font/dm_sans.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/layout/about_fragment.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/activity_view_resource.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/details_fragment.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/event_fragment.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/feed_fragment.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_explore.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_explore2.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_project_idea.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_recycler_view.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_resources.xml" value="0.1852355072463768" />
+        <entry key="app/src/main/res/layout/fragment_swipe_recycler.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_welcome.xml" value="0.12817028985507245" />
+        <entry key="app/src/main/res/layout/item_event.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/item_feed.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/item_project.xml" value="0.11955420466058764" />
+        <entry key="app/src/main/res/layout/item_resource.xml" value="0.11955420466058764" />
+        <entry key="app/src/main/res/layout/load_state_footer_view_item.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/navigation_drawer.xml" value="0.13765045048499164" />
+        <entry key="app/src/main/res/layout/project_fragment.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/resource_fragment.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/roadmap_fragment.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/separator_view_item.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/temp.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.140625" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
