@@ -1,16 +1,13 @@
 package com.mstc.mstcapp.ui.home
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.mstc.mstcapp.R
 import com.mstc.mstcapp.model.Feed
 
 private const val TAG = "FeedAdapter"
 
-class FeedAdapter : PagingDataAdapter<Feed, RecyclerView.ViewHolder>(UIMODEL_COMPARATOR) {
+class FeedAdapter : PagingDataAdapter<Feed, FeedViewHolder>(UIMODEL_COMPARATOR) {
 
     companion object {
         private val UIMODEL_COMPARATOR = object : DiffUtil.ItemCallback<Feed>() {
@@ -23,18 +20,13 @@ class FeedAdapter : PagingDataAdapter<Feed, RecyclerView.ViewHolder>(UIMODEL_COM
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return R.layout.item_feed
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
         val feed = getItem(position)
-        if (feed != null) {
-            (holder as FeedViewHolder).bind(feed)
-        }
+        if (feed != null)
+            holder.bind(feed)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         return FeedViewHolder.create(parent)
     }
 }

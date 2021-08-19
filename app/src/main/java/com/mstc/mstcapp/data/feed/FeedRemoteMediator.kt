@@ -1,14 +1,12 @@
 package com.mstc.mstcapp.data.feed
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.mstc.mstcapp.util.RetrofitService
 import com.mstc.mstcapp.model.Feed
-import com.mstc.mstcapp.model.remoteKeys.FeedRemoteKey
+import com.mstc.mstcapp.util.RetrofitService
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -56,38 +54,32 @@ class FeedRemoteMediator(
         }
 
         try {
-            val response = service.getFeed(page)
-            if (response.isSuccessful) {
-                val feeds = response.body()
-                feeds?.let { it ->
-                    val endOfPaginationReached = it.isEmpty()
-                    feedDatabase.withTransaction {
-                        // clear all tables in the database
-                        if (loadType == LoadType.REFRESH) {
-                            feedDatabase.feedKeyDao().clearAll()
-                            feedDatabase.feedDao().clearAll()
-                        }
-                        val prevKey = if (page == FEED_STARTING_PAGE_INDEX) null else page - 1
-                        val nextKey = if (endOfPaginationReached == true) null else page + 1
-                        val keys = feeds.map {
-                            FeedRemoteKey(feedId = it.id,
-                                prevKey = prevKey,
-                                nextKey = nextKey)
-                        }
-                        feedDatabase.feedKeyDao().insertAll(keys)
-                        feedDatabase.feedDao().insertAll(it)
+            val feeds = service.getFeed(page)
+            feeds.let { it ->
+                val endOfPaginationReached = it.isEmpty()
+                feedDatabase.withTransaction {
+                    // clear all tables in the database
+                    if (loadType == LoadType.REFRESH) {
+                        feedDatabase.feedKeyDao().clearAll()
+                        feedDatabase.feedDao().clearAll()
                     }
-                    return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+                    val prevKey = if (page == FEED_STARTING_PAGE_INDEX) null else page - 1
+                    val nextKey = if (endOfPaginationReached) null else page + 1
+                    val keys = feeds.map {
+                        FeedRemoteKey(feedId = it.id,
+                            prevKey = prevKey,
+                            nextKey = nextKey)
+                    }
+                    feedDatabase.feedKeyDao().insertAll(keys)
+                    feedDatabase.feedDao().insertAll(it)
                 }
-            } else
-                Log.i(TAG, "load: ${response.code()}")
-            return MediatorResult.Error(Throwable())
+                return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+            }
         } catch (exception: IOException) {
             return MediatorResult.Error(exception)
         } catch (exception: HttpException) {
             return MediatorResult.Error(exception)
         }
-
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Feed>): FeedRemoteKey? {

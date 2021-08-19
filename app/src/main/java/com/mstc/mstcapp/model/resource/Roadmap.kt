@@ -10,6 +10,7 @@ class Roadmap(
     val domain: String,
     @SerializedName("image")
     val image: String,
+
     @PrimaryKey
     @SerializedName("_id")
     val id: String,

@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/margin_medium"
     android:layout_marginVertical="@dimen/margin_small"
-    android:animateLayoutChanges="true"
     android:clickable="true"
+    android:elevation="0dp"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/corner_radius"
+    app:cardElevation="0dp"
+    app:contentPadding="1dp"
+    tools:cardBackgroundColor="@color/colorTertiaryBlue">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/margin_small"
-        android:paddingStart="@dimen/margin_small">
+        android:background="@drawable/bg_project">
+
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginVertical="@dimen/margin_small"
-            android:layout_marginStart="136dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/image"
             android:layout_toStartOf="@id/viewMore"
             android:textAppearance="@style/heading1" />
+
 
         <ImageView
             android:id="@+id/image"
@@ -32,7 +41,9 @@
             android:layout_height="128dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/ic_error" />
+            android:contentDescription="@string/event_image"
+            android:background="@drawable/bg_project"
+            tools:src="@drawable/ic_error" />
 
         <TextView
             android:id="@+id/details"
@@ -41,18 +52,21 @@
             android:layout_below="@id/title"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/viewMore"
-            android:ellipsize="end" />
+            android:ellipsize="end"
+            android:paddingHorizontal="@dimen/margin_small"
+            android:paddingBottom="@dimen/margin_small"
+            tools:text="@string/placeholder_text_long" />
 
 
         <ImageButton
             android:id="@+id/viewMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margin_medium"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/view"
+            android:padding="@dimen/margin_small"
             android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
     </RelativeLayout>

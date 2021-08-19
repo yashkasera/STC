@@ -18,13 +18,13 @@ import retrofit2.http.*
 interface RetrofitService {
 
     @GET("project")
-    suspend fun getProjects(@Query("skip") skip: Int): Response<List<Project>>
+    suspend fun getProjects(): Response<List<Project>>
 
     @GET("event")
-    suspend fun getEvent(@Query("skip") skip: Int): Response<List<Event>>
+    suspend fun getEvents(): Response<List<Event>>
 
     @GET("feed")
-    suspend fun getFeed(@Query("skip") skip: Int): Response<List<Feed>>
+    suspend fun getFeed(@Query("skip") skip: Int): List<Feed>
 
     @GET("board")
     suspend fun getBoard(): Response<List<BoardMember>>

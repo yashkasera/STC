@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mstc.mstcapp.model.explore.BoardMember
 
 class BoardMemberAdapter : RecyclerView.Adapter<BoardMemberViewHolder>() {
+
     var list = listOf<BoardMember>()
         set(value) {
             field = value

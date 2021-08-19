@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.mstc.mstcapp.model.explore.BoardMember
+import com.mstc.mstcapp.model.explore.Event
+import com.mstc.mstcapp.model.explore.Project
 import com.mstc.mstcapp.model.resource.Detail
 import com.mstc.mstcapp.model.resource.Resource
 import com.mstc.mstcapp.model.resource.Roadmap
@@ -14,7 +16,9 @@ import com.mstc.mstcapp.model.resource.Roadmap
     Detail::class,
     Roadmap::class,
     Resource::class,
-    BoardMember::class
+    BoardMember::class,
+    Event::class,
+    Project::class
 ], version = 1, exportSchema = false)
 abstract class STCDatabase : RoomDatabase() {
     abstract fun databaseDao(): DatabaseDao
@@ -39,6 +43,8 @@ abstract class STCDatabase : RoomDatabase() {
                         super.onOpen(db)
                         val repository = ResourceRepository(context = context, INSTANCE!!)
                         repository.getBoardMembers()
+                        repository.getProjects()
+                        repository.getEvents()
                     }
                 })
                 .build()

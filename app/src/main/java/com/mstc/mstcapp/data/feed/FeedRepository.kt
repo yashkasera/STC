@@ -1,12 +1,11 @@
 package com.mstc.mstcapp.data.feed
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.mstc.mstcapp.util.RetrofitService
 import com.mstc.mstcapp.model.Feed
+import com.mstc.mstcapp.util.RetrofitService
 import kotlinx.coroutines.flow.Flow
 
 private const val TAG = "FeedRepository"
@@ -16,7 +15,6 @@ class FeedRepository(
     private val feedDatabase: FeedDatabase,
 ) {
     fun getFeeds(): Flow<PagingData<Feed>> {
-        Log.i(TAG, "getFeeds: ")
         val pagingSourceFactory = { feedDatabase.feedDao().getFeed() }
         @OptIn(ExperimentalPagingApi::class)
         return Pager(

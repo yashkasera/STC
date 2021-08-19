@@ -9,14 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mstc.mstcapp.MainActivity
+import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
+import com.mstc.mstcapp.data.feed.FeedInjection
 import com.mstc.mstcapp.ui.loadState.LoadStateAdapter
-import com.mstc.mstcapp.databinding.FragmentRecyclerViewBinding
-import com.mstc.mstcapp.injection.FeedInjection
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import androidx.recyclerview.widget.LinearLayoutManager
 
 
 private const val TAG = "FeedFragment"
@@ -27,28 +27,24 @@ class FeedFragment : Fragment() {
         fun newInstance() = FeedFragment()
     }
 
-    private lateinit var binding: FragmentRecyclerViewBinding
+    private lateinit var binding: FragmentSwipeRecyclerBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentRecyclerViewBinding.inflate(inflater, container, false)
+        binding = FragmentSwipeRecyclerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProvider(this).get(FeedViewModel::class.java)
         val viewModel = ViewModelProvider(
             this, FeedInjection.provideViewModelFactory(
                 context = requireContext(),
                 owner = this
             )
         ).get(FeedViewModel::class.java)
-
-//        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-//        binding.recyclerView.addItemDecoration(decoration)
 
         // bind the state
         binding.bindState(
@@ -57,7 +53,7 @@ class FeedFragment : Fragment() {
         )
     }
 
-    private fun FragmentRecyclerViewBinding.bindState(
+    private fun FragmentSwipeRecyclerBinding.bindState(
         uiState: StateFlow<UiState>,
         uiActions: (UiAction) -> Unit,
     ) {
@@ -78,12 +74,16 @@ class FeedFragment : Fragment() {
     }
 
 
-    private fun FragmentRecyclerViewBinding.bindRecyclerView(
+    private fun FragmentSwipeRecyclerBinding.bindRecyclerView(
         header: LoadStateAdapter,
         feedAdapter: FeedAdapter,
         uiState: StateFlow<UiState>,
         onScrollChanged: (UiAction.Scroll) -> Unit,
     ) {
+        swipeRefreshLayout.setOnRefreshListener {
+            feedAdapter.refresh()
+            swipeRefreshLayout.isRefreshing = false
+        }
         retryButton.setOnClickListener { feedAdapter.retry() }
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -134,15 +134,11 @@ class FeedFragment : Fragment() {
                     ?.takeIf { it is LoadState.Error && feedAdapter.itemCount > 0 }
                     ?: loadState.prepend
 
-                val isListEmpty =
-                    loadState.refresh is LoadState.NotLoading && feedAdapter.itemCount == 0
-                // show empty list
-                emptyList.isVisible = isListEmpty
                 // Only show the list if refresh succeeds, either from the the local db or the remote.
                 recyclerView.isVisible =
                     loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
                 // Show loading spinner during initial load or refresh.
-                progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                swipeRefreshLayout.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
                 // Show the retry state if initial load or refresh fails.
                 retryButton.isVisible =
                     loadState.mediator?.refresh is LoadState.Error && feedAdapter.itemCount == 0
@@ -160,17 +156,5 @@ class FeedFragment : Fragment() {
 //                }
             }
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        val lastFirstVisiblePosition =
-            (binding.recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
-        MainActivity.feedPosition = lastFirstVisiblePosition
-    }
-
-    override fun onResume() {
-        super.onResume()
-        (binding.recyclerView.layoutManager as LinearLayoutManager).scrollToPosition(MainActivity.feedPosition)
     }
 }

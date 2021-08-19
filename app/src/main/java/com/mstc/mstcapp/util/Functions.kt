@@ -1,13 +1,9 @@
 package com.mstc.mstcapp.util
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
-import android.text.Html
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
-import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.*
@@ -33,6 +29,12 @@ class Functions {
                 e.printStackTrace()
             }
             return epoch
+        }
+
+        fun openURL(context: Context, url: String?) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            context.startActivity(intent)
         }
 
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.mstc.mstcapp.data.ResourceRepository
 import com.mstc.mstcapp.data.STCDatabase
+import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.resource.Resource
 import kotlinx.coroutines.launch
 
@@ -15,7 +16,7 @@ class ResourceViewModel(application: Application) : AndroidViewModel(application
     val repository =
         ResourceRepository(context, STCDatabase.getInstance(context))
 
-    fun getResources(domain: String): LiveData<List<Resource>> {
+    fun getResources(domain: String): LiveData<Result<List<Resource>>> {
         return repository.getDomainResources(domain)
     }
 

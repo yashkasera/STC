@@ -1,12 +1,10 @@
 package com.mstc.mstcapp.ui.resources
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mstc.mstcapp.R
 import com.mstc.mstcapp.model.Domain
 
-class DomainAdapter :
+class DomainAdapter() :
     RecyclerView.Adapter<DomainViewHolder>() {
 
     var list = listOf<Domain>()
@@ -20,7 +18,7 @@ class DomainAdapter :
     }
 
     override fun onBindViewHolder(holder: DomainViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(item = list[position])
     }
 
     override fun getItemCount(): Int {

@@ -7,6 +7,7 @@ import com.mstc.mstcapp.R
 import com.mstc.mstcapp.model.resource.Resource
 
 class ResourceAdapter() : RecyclerView.Adapter<ResourceViewHolder>() {
+
     var list = listOf<Resource>()
         set(value) {
             field = value

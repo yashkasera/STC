@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "DETAILS")
 class Detail(
     @SerializedName("description")
-    val description: String,
+    var description: String,
     @SerializedName("domain")
     val domain: String,
 
@@ -17,4 +17,10 @@ class Detail(
     @PrimaryKey
     @SerializedName("_id")
     val id: String,
-)
+){
+    init {
+        description = description
+            .trim()
+            .replace("  "," ")
+    }
+}

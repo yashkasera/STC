@@ -12,7 +12,7 @@ class Resource(
     val link: String,
 
     @SerializedName("description")
-    val description: String,
+    var description: String,
 
     @SerializedName("domain")
     val domain: String,
@@ -20,4 +20,10 @@ class Resource(
     @PrimaryKey
     @SerializedName("_id")
     val id: String,
-)
+){
+    init {
+        description = description
+            .trim()
+            .replace("  "," ")
+    }
+}

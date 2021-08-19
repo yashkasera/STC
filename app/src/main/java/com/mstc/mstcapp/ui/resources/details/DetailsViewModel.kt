@@ -7,15 +7,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.mstc.mstcapp.data.ResourceRepository
 import com.mstc.mstcapp.data.STCDatabase
+import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.resource.Detail
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(application: Application) : AndroidViewModel(application) {
+
     val context: Context by lazy { application.applicationContext }
-    val repository =
+    private val repository =
         ResourceRepository(context, STCDatabase.getInstance(context))
 
-    fun getDetails(domain: String): LiveData<Detail> {
+    fun getDetails(domain: String): LiveData<Result<Detail>> {
         return repository.getDomainDetails(domain)
     }
 

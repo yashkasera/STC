@@ -7,15 +7,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.mstc.mstcapp.data.ResourceRepository
 import com.mstc.mstcapp.data.STCDatabase
+import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.explore.BoardMember
 import kotlinx.coroutines.launch
 
 class AboutViewModel(application: Application) : AndroidViewModel(application) {
+
     val context: Context by lazy { application.applicationContext }
-    val repository =
+
+    private val repository =
         ResourceRepository(context, STCDatabase.getInstance(context))
 
-    fun getBoard(): LiveData<List<BoardMember>> {
+    fun getBoard(): LiveData<Result<List<BoardMember>>> {
         return repository.getBoardMembers()
     }
 

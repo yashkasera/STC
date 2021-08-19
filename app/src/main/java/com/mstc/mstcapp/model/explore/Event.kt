@@ -19,7 +19,7 @@ class Event(
     val link: String,
 
     @SerializedName("description")
-    val description: String,
+    var description: String,
 
     @SerializedName("startDate")
     val startDate: String,
@@ -31,8 +31,17 @@ class Event(
     @SerializedName("_id")
     val id: String,
 ) {
+    init {
+        description = description
+            .trim()
+            .replace("  "," ")
+    }
+
     @Ignore
     val status: String = statusString()
+
+    @Ignore
+    var expand: Boolean = false
 
     private fun statusString(): String {
         val startDate1 = Date(Functions.timestampToEpochSeconds(startDate))

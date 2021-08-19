@@ -15,7 +15,7 @@ class Project(
     val link: String,
 
     @SerializedName("description")
-    val description: String,
+    var description: String,
 
     @SerializedName("image")
     val image: String,
@@ -25,6 +25,11 @@ class Project(
     val id: String,
 
 ){
+    init {
+        description = description
+            .trim()
+            .replace("  "," ")
+    }
     @Ignore
     var expand:Boolean = false
 }

@@ -6,6 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mstc.mstcapp.model.explore.BoardMember
+import com.mstc.mstcapp.model.explore.Event
+import com.mstc.mstcapp.model.explore.Project
 import com.mstc.mstcapp.model.resource.Detail
 import com.mstc.mstcapp.model.resource.Resource
 import com.mstc.mstcapp.model.resource.Roadmap
@@ -24,7 +26,7 @@ interface DatabaseDao {
     suspend fun insertDetails(details: Detail)
 
     @Query("SELECT * FROM DETAILS WHERE domain = :domain")
-    fun getDetails(domain: String): LiveData<Detail>
+    fun getDetails(domain: String): LiveData<Detail?>
 
     @Query("DELETE FROM DETAILS WHERE domain = :domain")
     suspend fun deleteDetails(domain: String)
@@ -36,7 +38,7 @@ interface DatabaseDao {
     suspend fun insertRoadmap(roadmap: Roadmap)
 
     @Query("SELECT * FROM ROADMAPS WHERE domain=:domain")
-    fun getRoadmap(domain: String): LiveData<Roadmap>
+    fun getRoadmap(domain: String): LiveData<Roadmap?>
 
     @Query("DELETE FROM ROADMAPS WHERE domain=:domain")
     suspend fun deleteRoadmap(domain: String)
@@ -66,4 +68,29 @@ interface DatabaseDao {
 
     @Query("DELETE FROM BOARD")
     suspend fun clearBoardMembers()
+
+    /**
+     * PROJECTS
+     */
+    @Query("SELECT * FROM PROJECTS ORDER BY id DESC")
+    fun getProjects(): LiveData<List<Project>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertProjects(projects: List<Project>)
+
+    @Query("DELETE FROM PROJECTS")
+    suspend fun clearAllProjects()
+
+    /**
+     * EVENTS
+     */
+    @Query("SELECT * FROM EVENTS ORDER BY id DESC")
+    fun getEvents(): LiveData<List<Event>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertEvents(events: List<Event>)
+
+    @Query("DELETE FROM EVENTS")
+    suspend fun clearAllEvents()
+
 }

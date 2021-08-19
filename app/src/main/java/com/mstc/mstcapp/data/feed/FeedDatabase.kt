@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mstc.mstcapp.model.Feed
-import com.mstc.mstcapp.model.remoteKeys.FeedRemoteKey
 
 @Database(
     entities = [

@@ -3,84 +3,134 @@ package com.mstc.mstcapp
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.mstc.mstcapp.databinding.ActivityMainBinding
 import com.mstc.mstcapp.ui.ProjectIdeaFragment
 import com.mstc.mstcapp.util.Constants
+import com.mstc.mstcapp.util.Functions.Companion.openURL
 import java.util.*
+
+
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     var isHome = false
     val context: Context = this
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar)
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+
+        binding.drawerLayout.apply {
+            findViewById<View>(R.id.share)
+                .setOnClickListener { share() }
+            findViewById<View>(R.id.feedback)
+                .setOnClickListener {
+                    openURL(
+                        context,
+                        "market://details?id=" + context.packageName
+                    )
+                }
+            findViewById<View>(R.id.idea)
+                .setOnClickListener { openIdeaDialog() }
+            findViewById<View>(R.id.instagram)
+                .setOnClickListener { openURL(context, Constants.INSTAGRAM_URL) }
+            findViewById<View>(R.id.facebook)
+                .setOnClickListener { openURL(context, Constants.FACEBOOK_URL) }
+            findViewById<View>(R.id.linkedin)
+                .setOnClickListener { openURL(context, Constants.LINKEDIN_URL) }
+            findViewById<View>(R.id.github)
+                .setOnClickListener { openURL(context, Constants.GITHUB_URL) }
+            findViewById<View>(R.id.privacy_policy)
+                .setOnClickListener { openURL(context, Constants.PRIVACY_URL) }
+        }
+//        val navBuilder = NavOptions.Builder()
+//        navBuilder
+//            .setEnterAnim(android.R.anim.slide_in_left)
+//            .setExitAnim(android.R.anim.fade_out)
+//            .setExitAnim(android.R.anim.fade_out)
+//            .setPopEnterAnim(R.anim.slide_out_left)
+//            .setPopExitAnim(R.anim.slide_in_right)
 
         binding.apply {
-            drawerLayout.findViewById<View>(R.id.share)
-                .setOnClickListener { share() }
-            drawerLayout.findViewById<View>(R.id.feedback)
-                .setOnClickListener { openURL("market://details?id=" + context.packageName) }
-            drawerLayout.findViewById<View>(R.id.idea)
-                .setOnClickListener { openIdeaDialog() }
-            drawerLayout.findViewById<View>(R.id.instagram)
-                .setOnClickListener { openURL(Constants.INSTAGRAM_URL) }
-            drawerLayout.findViewById<View>(R.id.facebook)
-                .setOnClickListener { openURL(Constants.FACEBOOK_URL) }
-            drawerLayout.findViewById<View>(R.id.linkedin)
-                .setOnClickListener { openURL(Constants.LINKEDIN_URL) }
-            drawerLayout.findViewById<View>(R.id.github)
-                .setOnClickListener { openURL(Constants.GITHUB_URL) }
-            drawerLayout.findViewById<View>(R.id.privacy_policy)
-                .setOnClickListener { openURL(Constants.PRIVACY_URL) }
+            selectTab(home)
+            home.setOnClickListener {
+                selectTab(home)
+                if (navController.currentDestination?.id != R.id.navigation_home)
+                    navController.popBackStack()
+            }
+
+            resources.setOnClickListener {
+                selectTab(resources)
+                if (navController.currentDestination?.id != R.id.navigation_home)
+                    navController.popBackStack()
+                navController.navigate(R.id.navigation_resources)
+            }
+
+            explore.setOnClickListener {
+                selectTab(explore)
+                if (navController.currentDestination?.id != R.id.navigation_home)
+                    navController.popBackStack()
+                navController.navigate(R.id.navigation_explore)
+            }
+
+            val toggle = ActionBarDrawerToggle(
+                this@MainActivity,
+                drawerLayout,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+            )
+            drawerLayout.addDrawerListener(toggle)
+            toggle.syncState()
+            toolbar.navigationIcon = ContextCompat.getDrawable(
+                context,
+                R.drawable.ic_navigation
+            )
         }
+    }
 
-        val toggle = ActionBarDrawerToggle(
-            this,
-            binding.drawerLayout,
-            binding.toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close)
-        binding.drawerLayout.setDrawerListener(toggle)
-        toggle.syncState()
-        binding.toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_navigation)
 
-        binding.home.setOnClickListener {
-//            if (isHome) MainActivity.feed_position = 0
+    var exitCount: Int = 0
+    override fun onBackPressed() {
+        if (navController.currentDestination?.id == R.id.navigation_home) {
+            exitCount++
+            val view = findViewById<View>(android.R.id.content)
+            Snackbar.make(
+                context, view, "Press back again to exit",
+                BaseTransientBottomBar.LENGTH_SHORT
+            ).addCallback(object : Snackbar.Callback() {
+                override fun onDismissed(transientBottomBar: Snackbar, event: Int) {
+                    exitCount = 0
+                }
+            }).show()
+            if (exitCount == 2) {
+                super.onBackPressed()
+            }
+        } else {
             selectTab(binding.home)
             navController.popBackStack()
-            navController.navigate(R.id.navigation_home)
         }
-
-        binding.resources.setOnClickListener {
-            selectTab(binding.resources)
-            navController.popBackStack()
-            navController.navigate(R.id.navigation_resources)
-        }
-
-        binding.explore.setOnClickListener {
-            selectTab(binding.explore)
-            navController.popBackStack()
-            navController.navigate(R.id.navigation_explore)
-        }
-
     }
 
     private fun selectTab(chip: Chip) {
         for (j in arrayOf(binding.home, binding.resources, binding.explore)) {
-            if (j != chip) setUnselected(j)
+            setUnselected(j)
         }
         setSelected(chip)
     }
@@ -105,7 +155,8 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_SEND)
         val rand = Random()
         val messages =
-            arrayOf("Are you someone who still cannot find the material to start your journey to become a proficient developer?\n",
+            arrayOf(
+                "Are you someone who still cannot find the material to start your journey to become a proficient developer?\n",
                 "On the lookout for study material?\n",
                 "Budding developers! Still on the lookout for study material?\n"
             )
@@ -129,22 +180,16 @@ class MainActivity : AppCompatActivity() {
         projectIdeaFragment.show(fm, "projectFragment")
     }
 
-    private fun openURL(url: String?) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
-        startActivity(intent)
-    }
-
 
     companion object {
         private val fetchedData = HashMap<String, Boolean>()
-        public var feedPosition = 0
-        fun isFetchedData(domain: String): Boolean? {
+        fun isFetchedData(domain: String): Boolean {
             return if (fetchedData.containsKey(domain))
-                fetchedData[domain]
+                fetchedData[domain] == true
             else false
         }
-        fun setFetchedData(domain: String){
+
+        fun setFetchedData(domain: String) {
             fetchedData[domain] = true
         }
     }

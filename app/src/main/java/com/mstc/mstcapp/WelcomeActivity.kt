@@ -23,47 +23,50 @@ class WelcomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,
-            R.layout.activity_welcome) as ActivityWelcomeBinding
+        binding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_welcome
+        ) as ActivityWelcomeBinding
         val sharedPreferences =
             context.getSharedPreferences(Constants.STC_SHARED_PREFERENCES, MODE_PRIVATE)
         pagerAdapter = WelcomePagerAdapter(supportFragmentManager)
-        binding.viewPager.adapter = pagerAdapter
-        binding.next.setOnClickListener {
-            if (binding.viewPager.currentItem == pagerAdapter.count - 1) {
-                sharedPreferences.edit().putBoolean("isFirstLaunch", false).apply()
-                startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
-                finish()
-            } else {
-                ++binding.viewPager.currentItem
+        binding.apply {
+            viewPager.adapter = pagerAdapter
+            next.setOnClickListener {
+                if (viewPager.currentItem == pagerAdapter.count - 1) {
+                    sharedPreferences.edit().putBoolean("isFirstLaunch", false).apply()
+                    startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
+                    finish()
+                } else
+                    ++viewPager.currentItem
             }
+            viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int,
+                ) {
+                }
+
+                override fun onPageSelected(position: Int) {
+                    next.text = getString(
+                        when (position) {
+                            pagerAdapter.count - 1 -> R.string.continue_btn
+                            else -> R.string.next_btn
+                        }
+                    )
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {}
+            })
         }
-        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int,
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                binding.next.text = getString(when (position) {
-                    pagerAdapter.count - 1 -> R.string.continue_btn
-                    else -> R.string.next_btn
-                })
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {}
-        })
     }
 
     override fun onBackPressed() {
-        if (binding.viewPager.currentItem > 0) {
+        if (binding.viewPager.currentItem > 0)
             --binding.viewPager.currentItem
-//            addBottomDots()
-        } else {
+        else
             super.onBackPressed()
-        }
     }
 
     private inner class WelcomePagerAdapter(fragmentManager: FragmentManager) :

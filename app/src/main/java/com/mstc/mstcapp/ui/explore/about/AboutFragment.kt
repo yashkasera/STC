@@ -6,7 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.mstc.mstcapp.databinding.FragmentAboutBinding
 import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
+import com.mstc.mstcapp.model.Result
+import com.mstc.mstcapp.model.explore.BoardMember
+
+private const val TAG = "AboutFragment"
 
 class AboutFragment : Fragment() {
 
@@ -15,13 +20,13 @@ class AboutFragment : Fragment() {
     }
 
     private lateinit var viewModel: AboutViewModel
-    private lateinit var binding: FragmentSwipeRecyclerBinding
+    private lateinit var binding: FragmentAboutBinding
     private lateinit var boardMemberAdapter: BoardMemberAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentSwipeRecyclerBinding.inflate(inflater, container, false)
+        binding = FragmentAboutBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,24 +34,37 @@ class AboutFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(AboutViewModel::class.java)
         boardMemberAdapter = BoardMemberAdapter()
-        binding.recyclerView.adapter = boardMemberAdapter
-        viewModel.getBoard()
-            .observe(viewLifecycleOwner, { resources ->
-                run {
-                    if (resources.isEmpty())
-                        binding.retryButton.visibility = View.VISIBLE
-                    else {
-                        binding.retryButton.visibility = View.GONE
-                        boardMemberAdapter.list = resources
+        binding.apply {
+            recyclerView.adapter = boardMemberAdapter
+            viewModel.getBoard()
+                .observe(viewLifecycleOwner, { result ->
+                    run {
+                        when (result) {
+                            is Result.Loading -> {
+                                retryButton.visibility = View.GONE
+                                swipeRefreshLayout.isRefreshing = true
+                                if (result.data != null) {
+                                    boardMemberAdapter.list = result.data
+                                }
+                            }
+                            is Result.Success<List<BoardMember>> -> {
+                                boardMemberAdapter.list = result.data
+                                retryButton.visibility = View.GONE
+                                swipeRefreshLayout.isRefreshing = false
+                            }
+                            else -> {
+                                retryButton.visibility = View.VISIBLE
+                                swipeRefreshLayout.isRefreshing = false
+                            }
+                        }
                     }
-                }
-            })
-        binding.retryButton.setOnClickListener {
-            viewModel.refreshBoard()
-        }
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refreshBoard()
-            binding.swipeRefreshLayout.isRefreshing = false
+                })
+            retryButton.setOnClickListener { viewModel.refreshBoard() }
+
+            swipeRefreshLayout.setOnRefreshListener {
+                viewModel.refreshBoard()
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
     }
 

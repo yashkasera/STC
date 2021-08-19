@@ -11,10 +11,16 @@ class Feed(
     @SerializedName("_id")
     val id: String,
     val title: String,
-    val description: String,
+    var description: String,
     val link: String,
     val image: String,
-){
+) {
+    init {
+        description = description
+            .trim()
+            .replace("  "," ")
+    }
+
     @Ignore
-    var expand:Boolean = false
+    var expand: Boolean = false
 }

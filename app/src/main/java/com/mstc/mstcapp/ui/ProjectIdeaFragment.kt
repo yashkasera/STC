@@ -30,7 +30,7 @@ class ProjectIdeaFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentProjectIdeaBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,29 +38,32 @@ class ProjectIdeaFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         progressDialog = ProgressDialog(requireContext())
-        binding.post.setOnClickListener {
-            val projectIdeaModel = ProjectIdea(
-                binding.name.text.toString(),
-                binding.phone.text.toString(),
-                binding.email.text.toString(),
-                binding.idea.text.toString(),
-                binding.description.text.toString())
-            if (projectIdeaModel.name.isEmpty())
-                binding.name1.error = "Cannot be empty!"
-            else if (projectIdeaModel.phone.isEmpty())
-                binding.phone1.error = "Cannot be empty!"
-            else if (projectIdeaModel.phone.length != 10)
-                binding.phone1.error = "Invalid Phone Number"
-            else if (projectIdeaModel.email.isEmpty())
-                binding.email1.error = "Cannot be empty!"
-            else if (!projectIdeaModel.email.matches(Regex("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")))
-                binding.email1.error = "Invalid Email Address"
-            else if (projectIdeaModel.idea.isEmpty())
-                binding.idea1.error = "Cannot be empty!"
-            else if (projectIdeaModel.description.isEmpty())
-                binding.description1.error = "Cannot be empty!"
-            else
-                lifecycleScope.launch { postData(projectIdeaModel) }
+        binding.apply {
+            post.setOnClickListener {
+                val projectIdeaModel = ProjectIdea(
+                    name.text.toString(),
+                    phone.text.toString(),
+                    email.text.toString(),
+                    idea.text.toString(),
+                    description.text.toString()
+                )
+                if (projectIdeaModel.name.isEmpty())
+                    name1.error = "Cannot be empty!"
+                else if (projectIdeaModel.phone.isEmpty())
+                    phone1.error = "Cannot be empty!"
+                else if (projectIdeaModel.phone.length != 10)
+                    phone1.error = "Invalid Phone Number"
+                else if (projectIdeaModel.email.isEmpty())
+                    email1.error = "Cannot be empty!"
+                else if (!projectIdeaModel.email.matches(Regex("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")))
+                    email1.error = "Invalid Email Address"
+                else if (projectIdeaModel.idea.isEmpty())
+                    idea1.error = "Cannot be empty!"
+                else if (projectIdeaModel.description.isEmpty())
+                    description1.error = "Cannot be empty!"
+                else
+                    lifecycleScope.launch { postData(projectIdeaModel) }
+            }
         }
     }
 
@@ -74,8 +77,10 @@ class ProjectIdeaFragment : BottomSheetDialogFragment() {
             dismiss()
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Idea Posted Successfully")
-                .setMessage("Your idea has been posted successfully! " +
-                        "Please feel free to check out the resources while we contact you.")
+                .setMessage(
+                    "Your idea has been posted successfully! " +
+                            "Please feel free to check out the resources while we contact you."
+                )
                 .setPositiveButton("Dismiss") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
                 .show()
         } else {

@@ -44,6 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/choose_domain_helper_text"
                         android:textAppearance="@style/body2" />
 
                     <ImageView
@@ -69,7 +70,8 @@
                 android:layout_gravity="bottom"
                 app:layout_scrollFlags="noScroll"
                 app:tabIndicatorColor="@color/textColorPrimary"
-                app:tabSelectedTextColor="@color/textColorPrimary">
+                app:tabSelectedTextColor="@color/textColorPrimary"
+                app:tabTextAppearance="@style/body1">
 
             </com.google.android.material.tabs.TabLayout>
 

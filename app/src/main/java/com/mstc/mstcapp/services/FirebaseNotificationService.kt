@@ -19,6 +19,8 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.mstc.mstcapp.MainActivity
 import com.mstc.mstcapp.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FirebaseNotificationService : FirebaseMessagingService() {
     override fun onCreate() {
@@ -60,12 +62,16 @@ class FirebaseNotificationService : FirebaseMessagingService() {
         Log.i(TAG, "onMessageReceived: " + remoteMessage.from)
         if (remoteMessage.from == ("/topics/event")) {
             val map: Map<String, String> = remoteMessage.data
-            val title = map["title"].toString() + " on " + map["startDate"]
+            val date = Date(map["startDate"])
+            val sdf = SimpleDateFormat("dd-MM HH:mm a")
+            val title = map["title"].toString() + " on " + sdf.format(date)
             val description = map["description"]
             sendTopicNotification(title, description)
         } else if (remoteMessage.from == ("/topics/other")) {
             val map: Map<String, String> = remoteMessage.data
-            val title = map["title"].toString() + " on " + map["startDate"]
+            val date = Date(map["startDate"])
+            val sdf = SimpleDateFormat("dd-MM HH:mm a")
+            val title = map["title"].toString() + " on " + sdf.format(date)
             val description = map["description"]
             sendOtherNotification(title, description)
         }

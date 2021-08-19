@@ -1,35 +1,27 @@
 package com.mstc.mstcapp.ui.explore.event
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
-import com.mstc.mstcapp.R
+import androidx.recyclerview.widget.RecyclerView
 import com.mstc.mstcapp.model.explore.Event
 
 private const val TAG = "EventAdapter"
 
-class EventAdapter : PagingDataAdapter<Event, EventViewHolder>(UIMODEL_COMPARATOR) {
+class EventAdapter : RecyclerView.Adapter<EventViewHolder>() {
 
-    companion object {
-        private val UIMODEL_COMPARATOR = object : DiffUtil.ItemCallback<Event>() {
-            override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean =
-                oldItem.title == newItem.title
+    var list = listOf<Event>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
         }
-    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder =
+        EventViewHolder.create(parent)
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val event = getItem(position)
-        if (event != null) {
-            holder.bind(event)
-        }
+        holder.bind(list[position])
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        return EventViewHolder.create(parent)
-    }
+
+    override fun getItemCount(): Int = list.size
+
 }
 

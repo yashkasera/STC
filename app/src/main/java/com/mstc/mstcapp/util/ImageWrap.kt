@@ -9,11 +9,9 @@ import android.text.style.LeadingMarginSpan.LeadingMarginSpan2
 class ImageWrap(private val lines: Int, private val margin: Int) :
     LeadingMarginSpan2 {
     override fun getLeadingMargin(first: Boolean): Int {
-        return if (first) {
+        return if (first)
             margin
-        } else {
-            0
-        }
+        else 0
     }
 
     override fun drawLeadingMargin(

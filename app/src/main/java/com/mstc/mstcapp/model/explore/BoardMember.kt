@@ -19,9 +19,15 @@ class BoardMember(
     val link: String,
 
     @SerializedName("phrase")
-    val phrase: String,
+    var phrase: String,
 
     @PrimaryKey
     @SerializedName("_id")
     val id: String,
-)
+){
+    init {
+        phrase = phrase
+            .trim()
+            .replace("  "," ")
+    }
+}
