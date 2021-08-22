@@ -24,8 +24,14 @@
         <entry key="app/src/main/res/drawable/ic_invitation.xml" value="0.2361111111111111" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/drawable/ic_linkedin.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/drawable/ic_loading.xml" value="0.2640625" />
+        <entry key="app/src/main/res/drawable/ic_ml.xml" value="0.2640625" />
+        <entry key="app/src/main/res/drawable/ic_outer_circle.xml" value="0.2640625" />
+        <entry key="app/src/main/res/drawable/ic_semi_circle.xml" value="0.2640625" />
+        <entry key="app/src/main/res/drawable/loading_placeholder.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/resource_background.xml" value="0.2361111111111111" />
         <entry key="app/src/main/res/drawable/selected_dot.xml" value="0.23055555555555557" />
+        <entry key="app/src/main/res/drawable/spinner.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/tab_selector.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/drawable/tab_selectoy.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/drawable/welcome_default_dot.xml" value="0.22037037037037038" />
@@ -42,30 +48,31 @@
         <entry key="app/src/main/res/layout/event_fragment.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/feed_fragment.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.24791666666666667" />
-        <entry key="app/src/main/res/layout/fragment_details.xml" value="0.11955420466058764" />
+        <entry key="app/src/main/res/layout/fragment_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_explore.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_explore2.xml" value="0.13451086956521738" />
-        <entry key="app/src/main/res/layout/fragment_project_idea.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_project_idea.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_recycler_view.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/fragment_resources.xml" value="0.1852355072463768" />
-        <entry key="app/src/main/res/layout/fragment_roadmap.xml" value="0.11955420466058764" />
+        <entry key="app/src/main/res/layout/fragment_roadmap.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_swipe_recycler.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/fragment_welcome.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_board_member.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_domain.xml" value="0.11955420466058764" />
+        <entry key="app/src/main/res/layout/item_error.xml" value="0.24791666666666667" />
         <entry key="app/src/main/res/layout/item_event.xml" value="0.24926678983308487" />
         <entry key="app/src/main/res/layout/item_feed.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_footer.xml" value="0.12056737588652482" />
         <entry key="app/src/main/res/layout/item_loading.xml" value="0.12107396149949341" />
         <entry key="app/src/main/res/layout/item_project.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/item_resource.xml" value="0.11955420466058764" />
+        <entry key="app/src/main/res/layout/item_resource.xml" value="0.22" />
         <entry key="app/src/main/res/layout/load_state_footer_view_item.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/navigation_drawer.xml" value="0.13765045048499164" />
         <entry key="app/src/main/res/layout/project_fragment.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/resource_fragment.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/roadmap_fragment.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/separator_view_item.xml" value="0.13451086956521738" />
-        <entry key="app/src/main/res/layout/temp.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/temp.xml" value="0.30064719660107403" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.140625" />
       </map>
