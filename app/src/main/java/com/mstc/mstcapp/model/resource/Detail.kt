@@ -18,10 +18,12 @@ class Detail(
     @PrimaryKey
     @SerializedName("_id")
     val id: String,
-){
+) {
     init {
         description = description
-            .replace("  "," ")
-            .trim()
+            .replace("  ", " ")
+            .trimIndent()
     }
+    override fun toString(): String = "$id, $domain, $description, $expectation"
+
 }
