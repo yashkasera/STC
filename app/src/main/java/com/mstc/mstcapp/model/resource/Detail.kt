@@ -24,6 +24,7 @@ class Detail(
             .replace("  ", " ")
             .trimIndent()
     }
+
     override fun toString(): String = "$id, $domain, $description, $expectation"
 
 }

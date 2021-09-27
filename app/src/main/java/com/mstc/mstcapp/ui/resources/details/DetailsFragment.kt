@@ -1,7 +1,6 @@
 package com.mstc.mstcapp.ui.resources.details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.mstc.mstcapp.databinding.FragmentDetailsBinding
 import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.resource.Detail
-
-private const val TAG = "DetailsFragment"
 
 class DetailsFragment(val domain: String) : Fragment() {
     private lateinit var binding: FragmentDetailsBinding

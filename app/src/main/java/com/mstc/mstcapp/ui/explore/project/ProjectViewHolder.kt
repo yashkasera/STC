@@ -17,7 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.ItemProjectBinding
 import com.mstc.mstcapp.model.explore.Project
-import com.mstc.mstcapp.util.Functions.Companion.openURL
+import com.mstc.mstcapp.util.Functions
 import com.mstc.mstcapp.util.ImageWrap
 
 
@@ -69,7 +69,7 @@ class ProjectViewHolder(
                     )
                 )
             }
-            relativeLayout.setOnClickListener { openURL(root.context, project.link) }
+            relativeLayout.setOnClickListener { Functions.openLinkWithAnimation(relativeLayout, project.link) }
         }
     }
 
@@ -97,9 +97,7 @@ class ProjectViewHolder(
 
         val span = ImageWrap(lines - 1, finalWidth)
         val extra = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                openURL(root.context, project.link)
-            }
+            override fun onClick(widget: View) { Functions.openLinkWithAnimation(relativeLayout, project.link) }
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
@@ -148,6 +146,7 @@ class ProjectViewHolder(
         details.text = spannableString
         details.movementMethod = LinkMovementMethod.getInstance()
     }
+
 
     companion object {
         fun create(parent: ViewGroup): ProjectViewHolder {

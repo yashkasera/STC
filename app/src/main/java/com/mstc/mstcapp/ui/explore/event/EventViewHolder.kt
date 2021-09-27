@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.ItemEventBinding
 import com.mstc.mstcapp.model.explore.Event
-import com.mstc.mstcapp.util.Functions.Companion.openURL
+import com.mstc.mstcapp.util.Functions
 
 private const val TAG = "EventViewHolder"
 
@@ -30,9 +30,9 @@ class EventViewHolder(
             title.text = event.title
             makeSpan(event)
             loadImage(event)
-            image.setOnClickListener { openURL(root.context, event.link) }
-            title.setOnClickListener { openURL(root.context, event.link) }
-            constraintLayout.setOnClickListener { openURL(root.context, event.link) }
+            image.setOnClickListener { Functions.openLinkWithAnimation(root, event.link) }
+            title.setOnClickListener { Functions.openLinkWithAnimation(root, event.link) }
+            constraintLayout.setOnClickListener { Functions.openLinkWithAnimation(root, event.link) }
             root.apply {
                 setCardBackgroundColor(
                     ContextCompat.getColor(
@@ -73,7 +73,7 @@ class EventViewHolder(
             val spannableString = SpannableString(text)
             val extra = object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    openURL(root.context, event.link)
+                    Functions.openLinkWithAnimation(root, event.link)
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
