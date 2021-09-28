@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_stat_name.xml" value="0.1667763157894737" />
         <entry key="app/src/main/res/drawable/background_round.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/bg_board.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/bg_border.xml" value="0.2640625" />
@@ -30,9 +31,11 @@
         <entry key="app/src/main/res/drawable/ic_ml.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/ic_navigation.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/ic_onboarding_1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_onboarding_3.xml" value="0.16514657980456027" />
         <entry key="app/src/main/res/drawable/ic_outer_circle.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/ic_resource.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/ic_semi_circle.xml" value="0.2640625" />
+        <entry key="app/src/main/res/drawable/ic_share.xml" value="0.1667763157894737" />
         <entry key="app/src/main/res/drawable/ic_stc_white.xml" value="0.1638888888888889" />
         <entry key="app/src/main/res/drawable/ic_view.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/drawable/loading_placeholder.xml" value="0.12" />
@@ -83,7 +86,7 @@
         <entry key="app/src/main/res/layout/roadmap_fragment.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/separator_view_item.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/temp.xml" value="0.30064719660107403" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.140625" />
       </map>
     </option>
