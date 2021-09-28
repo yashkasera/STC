@@ -15,12 +15,18 @@
         <entry key="app/src/main/res/drawable/bg_splash.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/default_dot.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/drawable/ic_app_dev.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1667763157894737" />
+        <entry key="app/src/main/res/drawable/ic_backend.xml" value="0.1667763157894737" />
         <entry key="app/src/main/res/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.14322916666666666" />
         <entry key="app/src/main/res/drawable/ic_baseline_keyboard_arrow_up_24.xml" value="0.14322916666666666" />
         <entry key="app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.1667763157894737" />
         <entry key="app/src/main/res/drawable/ic_bg_explore.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/ic_cc.xml" value="0.2361111111111111" />
+        <entry key="app/src/main/res/drawable/ic_data_science.xml" value="0.1667763157894737" />
+        <entry key="app/src/main/res/drawable/ic_design.xml" value="0.1667763157894737" />
+        <entry key="app/src/main/res/drawable/ic_error.xml" value="0.1667763157894737" />
         <entry key="app/src/main/res/drawable/ic_facebook.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/drawable/ic_frontend.xml" value="0.1667763157894737" />
         <entry key="app/src/main/res/drawable/ic_github.xml" value="0.2361111111111111" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/drawable/ic_instagram.xml" value="0.2361111111111111" />
@@ -28,6 +34,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/drawable/ic_linkedin.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/drawable/ic_loading.xml" value="0.2640625" />
+        <entry key="app/src/main/res/drawable/ic_message.xml" value="0.1667763157894737" />
         <entry key="app/src/main/res/drawable/ic_ml.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/ic_navigation.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/ic_onboarding_1.xml" value="0.1" />
@@ -71,7 +78,7 @@
         <entry key="app/src/main/res/layout/fragment_swipe_recycler.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_welcome.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_board_member.xml" value="0.3629518072289157" />
-        <entry key="app/src/main/res/layout/item_domain.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/item_domain.xml" value="0.14" />
         <entry key="app/src/main/res/layout/item_error.xml" value="0.24791666666666667" />
         <entry key="app/src/main/res/layout/item_event.xml" value="0.16" />
         <entry key="app/src/main/res/layout/item_feed.xml" value="0.2" />
@@ -91,7 +98,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
