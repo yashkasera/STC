@@ -3,7 +3,6 @@
     <string name="title_home">Home</string>
     <string name="title_resources">Resources</string>
     <string name="title_explore">Explore</string>
-    <string name="title_about">About</string>
     <string name="contentDescription">imageView</string>
     <string name="select_a_domain">Select a domain</string>
     <string name="domain">Domain</string>
@@ -27,9 +26,7 @@
     <string name="description">Description</string>
     <string name="post">POST</string>
     <string name="member_photo">Member Photo</string>
-    <string name="feed_image">Feed Image</string>
     <string name="project_logo">Project Logo</string>
-    <string name="view">View</string>
     <string name="share">Share</string>
     <string name="refer_a_friend">Refer a friend</string>
     <string name="feedback">Give us a feedback</string>
@@ -43,9 +40,7 @@
     <string name="on_boarding">On boarding</string>
     <string name="continue_btn">Continue</string>
     <string name="next_btn">Next</string>
-    <string name="more">Read More</string>
     <string name="retry">Retry</string>
-    <string name="no_results">No results</string>
     <string name="error_text">Unable to fetch data! Please check your internet connection…</string>
     <string name="about_text">Student Technical Community is a student community in VIT Vellore aimed at enhancing skills of its members in various domains through quality projects and events tailored for cutting edge skill development</string>
     <string name="the_team">The Team</string>
