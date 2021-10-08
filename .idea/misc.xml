@@ -82,7 +82,7 @@
         <entry key="app/src/main/res/layout/item_board_member.xml" value="0.3629518072289157" />
         <entry key="app/src/main/res/layout/item_domain.xml" value="0.14" />
         <entry key="app/src/main/res/layout/item_error.xml" value="0.24791666666666667" />
-        <entry key="app/src/main/res/layout/item_event.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/item_event.xml" value="0.2542713567839196" />
         <entry key="app/src/main/res/layout/item_feed.xml" value="0.2" />
         <entry key="app/src/main/res/layout/item_footer.xml" value="0.12056737588652482" />
         <entry key="app/src/main/res/layout/item_loading.xml" value="0.12107396149949341" />
@@ -100,7 +100,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

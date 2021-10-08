@@ -4,6 +4,7 @@ import `in`.stcvit.stcapp.R
 import `in`.stcvit.stcapp.databinding.ItemEventBinding
 import `in`.stcvit.stcapp.model.explore.Event
 import `in`.stcvit.stcapp.util.Functions
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
@@ -13,11 +14,15 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+
 
 private const val TAG = "EventViewHolder"
 
@@ -38,6 +43,25 @@ class EventViewHolder(
                     root,
                     event.link
                 )
+            }
+            reminder.text = event.reminder
+            reminder.isVisible = event.reminder != null
+
+            reminder.setOnClickListener {
+                Log.i(TAG, "bind: ${event.startDate}")
+                val intent = Intent(Intent.ACTION_EDIT)
+                intent.type = "vnd.android.cursor.item/event"
+                intent.putExtra("allDay", false)
+                intent.putExtra("beginTime", Functions.timestampToEpochSeconds(event.startDate))
+                intent.putExtra("endTime", Functions.timestampToEpochSeconds(event.endDate))
+                intent.putExtra("title", event.title)
+                intent.putExtra("description", event.description)
+                try {
+                    root.context.startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(root.context, "Cannot create a reminder!", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
             root.apply {
                 setCardBackgroundColor(

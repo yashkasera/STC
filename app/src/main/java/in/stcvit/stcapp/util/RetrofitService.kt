@@ -42,7 +42,7 @@ interface RetrofitService {
     suspend fun postIdea(@Body projectIdeaModel: ProjectIdea): Response<Map<String, String>>
 
     companion object {
-        private const val BASE_URL = "https://stcbackend.herokuapp.com/"
+        private const val BASE_URL = "https://stcappbackendnode.azurewebsites.net/"
         fun create(): RetrofitService {
             val logger = HttpLoggingInterceptor()
             logger.level = HttpLoggingInterceptor.Level.BASIC
